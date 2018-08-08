@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, ActivityIndicator } from "react-native";
+import { View, Text, ActivityIndicator, StyleSheet, Image } from "react-native";
 import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -22,11 +22,11 @@ class DetailsComponent extends Component {
       );
     }
     return (
-      <View style={{ flex: 1, backgroundColor: "#F5F5F5" }}>
-        <Text>
-          {"Selected ImageIndex= "}
-          {selectedImageIndex + 1}
-        </Text>
+      <View style={styles.container}>
+        <Image
+          source={{ uri: data[selectedImageIndex].thumbnail }}
+          style={styles.image}
+        />
       </View>
     );
   }
@@ -49,6 +49,19 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(Actions, dispatch);
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignSelf: "center",
+    justifyContent: "center"
+  },
+  image: {
+    width: 300,
+    height: 300,
+    alignItems: "center"
+  }
+});
 
 export default connect(
   mapStateToProps,
