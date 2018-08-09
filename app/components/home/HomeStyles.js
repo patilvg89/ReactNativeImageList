@@ -25,6 +25,13 @@ const styles = StyleSheet.create({
     height: 50,
     marginRight: 10,
     alignSelf: "center"
+  },
+
+  checkboxStyle: {
+    flex: 1,
+    alignItems: "flex-end",
+    alignSelf: "center",
+    marginRight: 20
   }
 });
 

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {
   View,
-  Text,
+  Button,
   ActivityIndicator,
   StyleSheet,
   Image,
@@ -20,9 +20,13 @@ class DetailsComponent extends Component {
       selectedImagesArray: props.selectedImagesArray,
       selectedImageIndex: props.selectedImageIndex
     };
-    console.log("props", this.state);
+    console.log("props", this.props);
   }
 
+  onBackPress() {
+    this.props.navigation.goBack();
+    this.props.selectedImages(null);
+  }
   selectPreviousImage() {
     this.setState({ selectedImageIndex: this.state.selectedImageIndex - 1 });
   }
@@ -97,15 +101,19 @@ class DetailsComponent extends Component {
       );
     }
     return (
-      <View style={styles.container}>
-        {this.renderLeftArrow()}
+      <View style={styles.rootContainer}>
+        <View style={styles.container}>
+          {this.renderLeftArrow()}
 
-        <Image
-          source={{ uri: selectedImagesArray[selectedImageIndex].thumbnail }}
-          style={styles.image}
-        />
+          <Image
+            source={{ uri: selectedImagesArray[selectedImageIndex].thumbnail }}
+            style={styles.image}
+          />
 
-        {this.renderRightArrow()}
+          {this.renderRightArrow()}
+        </View>
+
+        <Button title={"Back"} onPress={this.onBackPress.bind(this)} />
       </View>
     );
   }
@@ -130,6 +138,10 @@ function mapDispatchToProps(dispatch) {
 }
 
 const styles = StyleSheet.create({
+  rootContainer: {
+    flex: 1,
+    flexDirection: "column"
+  },
   container: {
     flex: 1,
     justifyContent: "space-evenly",

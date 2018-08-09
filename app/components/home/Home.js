@@ -5,9 +5,9 @@ import {
   Text,
   ActivityIndicator,
   Image,
-  Button,
-  TouchableOpacity
+  Button
 } from "react-native";
+import CheckBox from "react-native-check-box";
 import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -25,44 +25,47 @@ class Home extends Component {
     getData();
   }
 
-  onRowSelect = (item, index) => {
-    console.log(item, index);
-    this.props.imageIndex(index); // set selected image position
+  checkboxClicked = (index, item) => {
+    console.log(index, item);
+    this.props.addSelectedImage(item);
   };
 
   goToNextScreen = () => {
-    this.props.selectedImages(this.props.data); // set array of selected images
+    console.log(this.props.selectedImagesArray);
     this.props.navigation.dispatch({ type: "DetailsScreen" }); // navigate to new screen
   };
 
   renderItem({ item, index }) {
     return (
-      <TouchableOpacity onPress={this.onRowSelect.bind(this, item, index)}>
-        <View style={styles.row}>
-          <Image
-            style={styles.thumbnail}
-            resizeMode={Image.resizeMode.contain}
-            source={{ uri: item.thumbnail }}
-          />
-          <View style={styles.column}>
-            <Text style={styles.title}>
-              {"id:"} {parseInt(index, 10) + 1}
-            </Text>
-            <Text style={styles.title}>
-              {"Name:"} {item.name}
-            </Text>
-            <Text style={styles.title}>
-              {"Price:"} {item.price} {" ₹"}
-            </Text>
-          </View>
+      <View style={styles.row}>
+        <Image
+          style={styles.thumbnail}
+          resizeMode={Image.resizeMode.contain}
+          source={{ uri: item.thumbnail }}
+        />
+        <View style={styles.column}>
+          <Text style={styles.title}>
+            {"id:"} {parseInt(index, 10) + 1}
+          </Text>
+          <Text style={styles.title}>
+            {"Name:"} {item.name}
+          </Text>
+          <Text style={styles.title}>
+            {"Price:"} {item.price} {" ₹"}
+          </Text>
         </View>
-      </TouchableOpacity>
+        <CheckBox
+          style={styles.checkboxStyle}
+          name={item.id}
+          onClick={this.checkboxClicked.bind(this, index, item)}
+          isChecked={false}
+        />
+      </View>
     );
   }
 
   render() {
     const { loading, data } = this.props;
-    console.log(loading, data);
     if (loading) {
       return (
         <View style={styles.activityIndicatorContainer}>

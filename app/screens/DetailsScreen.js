@@ -2,16 +2,16 @@ import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 import DetailsComponent from "../components/details/DetailsComponent";
 
-const DetailsScreen = ({ navigation, props }) => (
+const DetailsScreen = ({ navigation }) => (
   <View style={styles.container}>
-    <DetailsComponent navigation={navigation}/>
+    <DetailsComponent navigation={navigation} />
   </View>
 );
 
 DetailsScreen.propTypes = {};
 
 DetailsScreen.navigationOptions = {
-  title: "Details"
+  header: null
 };
 
 const styles = StyleSheet.create({
