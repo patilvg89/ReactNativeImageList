@@ -5,6 +5,7 @@ import {
   Text,
   ActivityIndicator,
   Image,
+  Button,
   TouchableOpacity
 } from "react-native";
 import PropTypes from "prop-types";
@@ -27,8 +28,10 @@ class Home extends Component {
   onRowSelect = (item, index) => {
     console.log(item, index);
     this.props.imageIndex(index); // set selected image position
-    this.props.selectedImages(this.props.data); // set array of selected images
+  };
 
+  goToNextScreen = () => {
+    this.props.selectedImages(this.props.data); // set array of selected images
     this.props.navigation.dispatch({ type: "DetailsScreen" }); // navigate to new screen
   };
 
@@ -74,6 +77,7 @@ class Home extends Component {
           renderItem={this.renderItem}
           keyExtractor={(item, index) => index.toString()}
         />
+        <Button onPress={this.goToNextScreen.bind(this)} title={"Submit"} />
       </View>
     );
   }
