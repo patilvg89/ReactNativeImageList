@@ -2,6 +2,7 @@ import data from "../../app/assets/data.json";
 
 export const DATA_AVAILABLE = "DATA_AVAILABLE";
 export const SELECTED_IMAGE_INDEX = "SELECTED_IMAGE_INDEX";
+export const SELECTED_IMAGES = "SELECTED_IMAGES";
 
 export function getData() {
   return dispatch => {
@@ -12,5 +13,11 @@ export function getData() {
 export function imageIndex(index) {
   return dispatch => {
     dispatch({ type: SELECTED_IMAGE_INDEX, data: index });
+  };
+}
+
+export function selectedImages(imageArr) {
+  return dispatch => {
+    dispatch({ type: SELECTED_IMAGES, data: imageArr });
   };
 }

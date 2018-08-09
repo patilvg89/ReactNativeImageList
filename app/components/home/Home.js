@@ -26,8 +26,10 @@ class Home extends Component {
 
   onRowSelect = (item, index) => {
     console.log(item, index);
-    this.props.imageIndex(index);
-    this.props.navigation.dispatch({ type: "DetailsScreen" });
+    this.props.imageIndex(index); // set selected image position
+    this.props.selectedImages(this.props.data); // set array of selected images
+
+    this.props.navigation.dispatch({ type: "DetailsScreen" }); // navigate to new screen
   };
 
   renderItem({ item, index }) {
@@ -66,7 +68,7 @@ class Home extends Component {
       );
     }
     return (
-      <View style={{ flex: 1, backgroundColor: "#F5F5F5"}}>
+      <View style={{ flex: 1, backgroundColor: "#F5F5F5" }}>
         <FlatList
           data={data}
           renderItem={this.renderItem}

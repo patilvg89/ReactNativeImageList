@@ -10,9 +10,27 @@ class DetailsComponent extends Component {
     super(props);
   }
 
+  renderLeftArrow() {
+    return (
+      <Image
+        source={require("../../assets/arrow_left.png")}
+        style={styles.leftArrow}
+      />
+    );
+  }
+
+  renderRightArrow() {
+    return (
+      <Image
+        source={require("../../assets/arrow_right.png")}
+        style={styles.leftArrow}
+      />
+    );
+  }
+
   render() {
-    const { loading, selectedImageIndex, data } = this.props;
-    console.log(loading, selectedImageIndex, data);
+    const { loading, selectedImageIndex, selectedImagesArray } = this.props;
+    console.log(loading, selectedImageIndex, selectedImagesArray);
 
     if (loading) {
       return (
@@ -23,10 +41,15 @@ class DetailsComponent extends Component {
     }
     return (
       <View style={styles.container}>
+      
+        {this.renderLeftArrow()}
+
         <Image
-          source={{ uri: data[selectedImageIndex].thumbnail }}
+          source={{ uri: selectedImagesArray[selectedImageIndex].thumbnail }}
           style={styles.image}
         />
+
+        {this.renderRightArrow()}
       </View>
     );
   }
@@ -35,13 +58,13 @@ class DetailsComponent extends Component {
 DetailsComponent.propTypes = {
   selectedImageIndex: PropTypes.number,
   loading: PropTypes.bool,
-  data: PropTypes.array
+  selectedImagesArray: PropTypes.array
 };
 
 function mapStateToProps(state) {
   return {
     loading: state.dataReducer.loading,
-    data: state.dataReducer.data,
+    selectedImagesArray: state.dataReducer.selectedImagesArray,
     selectedImageIndex: state.dataReducer.selectedImageIndex
   };
 }
@@ -53,12 +76,25 @@ function mapDispatchToProps(dispatch) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignSelf: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    flexDirection: "row"
   },
   image: {
-    width: 300,
-    height: 300,
+    width: 200,
+    height: 200,
+    alignSelf: "center",
+    alignItems: "center"
+  },
+  leftArrow: {
+    width: 50,
+    height: 50,
+    alignSelf: "center",
+    alignItems: "center"
+  },
+  rightArrow: {
+    width: 50,
+    height: 50,
+    alignSelf: "center",
     alignItems: "center"
   }
 });
