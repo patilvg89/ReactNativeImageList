@@ -4,7 +4,7 @@ import DetailsComponent from "../components/details/DetailsComponent";
 
 const DetailsScreen = ({ navigation, props }) => (
   <View style={styles.container}>
-    <DetailsComponent navigation={navigation} props={props} />
+    <DetailsComponent navigation={navigation}/>
   </View>
 );
 
@@ -17,7 +17,7 @@ DetailsScreen.navigationOptions = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FF44"
+    backgroundColor: "#FFF"
   }
 });
 

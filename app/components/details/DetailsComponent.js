@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { View, Text, ActivityIndicator, StyleSheet, Image } from "react-native";
+import {
+  View,
+  Text,
+  ActivityIndicator,
+  StyleSheet,
+  Image,
+  TouchableOpacity
+} from "react-native";
 import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -8,30 +15,80 @@ import * as Actions from "../../actions";
 class DetailsComponent extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      loading: props.loading,
+      selectedImagesArray: props.selectedImagesArray,
+      selectedImageIndex: props.selectedImageIndex
+    };
+    console.log("props", this.state);
+  }
+
+  selectPreviousImage() {
+    this.setState({ selectedImageIndex: this.state.selectedImageIndex - 1 });
+  }
+
+  selectNextImage() {
+    this.setState({ selectedImageIndex: this.state.selectedImageIndex + 1 });
   }
 
   renderLeftArrow() {
-    return (
-      <Image
-        source={require("../../assets/arrow_left.png")}
-        style={styles.leftArrow}
-      />
-    );
+    if (
+      this.state.selectedImageIndex != 0 &&
+      this.state.selectedImageIndex > 0
+    ) {
+      return (
+        <TouchableOpacity
+          onPress={this.selectPreviousImage.bind(this)}
+          style={styles.container}
+        >
+          <Image
+            source={require("../../assets/arrow_left.png")}
+            style={styles.arrow}
+          />
+        </TouchableOpacity>
+      );
+    } else {
+      return (
+        <View style={styles.container}>
+          <Image
+            source={require("../../assets/arrow_left.png")}
+            style={styles.arrowDisable}
+          />
+        </View>
+      );
+    }
   }
 
   renderRightArrow() {
-    return (
-      <Image
-        source={require("../../assets/arrow_right.png")}
-        style={styles.leftArrow}
-      />
-    );
+    if (
+      this.state.selectedImageIndex !=
+      this.state.selectedImagesArray.length - 1
+    ) {
+      return (
+        <TouchableOpacity
+          onPress={this.selectNextImage.bind(this)}
+          style={styles.container}
+        >
+          <Image
+            source={require("../../assets/arrow_right.png")}
+            style={styles.arrow}
+          />
+        </TouchableOpacity>
+      );
+    } else {
+      return (
+        <View style={styles.container}>
+          <Image
+            source={require("../../assets/arrow_right.png")}
+            style={styles.arrowDisable}
+          />
+        </View>
+      );
+    }
   }
 
   render() {
-    const { loading, selectedImageIndex, selectedImagesArray } = this.props;
-    console.log(loading, selectedImageIndex, selectedImagesArray);
-
+    const { loading, selectedImageIndex, selectedImagesArray } = this.state;
     if (loading) {
       return (
         <View style={styles.activityIndicatorContainer}>
@@ -41,7 +98,6 @@ class DetailsComponent extends Component {
     }
     return (
       <View style={styles.container}>
-      
         {this.renderLeftArrow()}
 
         <Image
@@ -76,26 +132,24 @@ function mapDispatchToProps(dispatch) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "space-evenly",
     flexDirection: "row"
   },
   image: {
     width: 200,
     height: 200,
-    alignSelf: "center",
-    alignItems: "center"
+    alignSelf: "center"
   },
-  leftArrow: {
+  arrow: {
+    width: 50,
+    height: 50,
+    alignSelf: "center"
+  },
+  arrowDisable: {
     width: 50,
     height: 50,
     alignSelf: "center",
-    alignItems: "center"
-  },
-  rightArrow: {
-    width: 50,
-    height: 50,
-    alignSelf: "center",
-    alignItems: "center"
+    tintColor: "#808080"
   }
 });
 
